@@ -10,19 +10,19 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
 
-background = icon = pygame.image.load('background.jpg')
+background = icon = pygame.image.load('media/background.jpg')
 
 
-mixer.music.load("war.wav")
+mixer.music.load('audio/war.wav')
 mixer.music.play(-1)
 
 
-pygame.display.set_caption("Legendary tank")
-icon = pygame.image.load('tank.png')
+pygame.display.set_caption('Legendary tank')
+icon = pygame.image.load('media/tank.png')
 pygame.display.set_icon(icon)
 
 
-playerImg = pygame.image.load('tank2.png')
+playerImg = pygame.image.load('media/tank2.png')
 playerX = 370
 playerY = 480
 playerX_change = 0
@@ -36,19 +36,19 @@ planeY_change = []
 num_of_plane = 4
 
 for i in range(num_of_plane):
-    planeImg.append(pygame.image.load('plane.png'))
+    planeImg.append(pygame.image.load('media/plane.png'))
     planeX.append(random.randint(0, 800))
     planeY.append(random.randint(50, 150))
     planeX_change.append(4)
     planeY_change.append(40)
 
 
-bulletImg = pygame.image.load('bullet.png')
+bulletImg = pygame.image.load('media/bullet.png')
 bulletX = 0
 bulletY = 480
 bulletX_change = 0
 bulletY_change = 10
-bullet_state = "ready"
+bullet_state = 'ready'
 
 score_value = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -61,12 +61,12 @@ over_font = pygame.font.Font('freesansbold.ttf', 64)
 
 
 def show_score(x, y):
-    score = font.render("Score: " + str(score_value), True, (255, 255, 255))
+    score = font.render('Score: ' + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))
 
 
 def game_over_text():
-    over_text = over_font.render("GAME OVER", True, (255, 255, 255))
+    over_text = over_font.render('GAME OVER', True, (255, 255, 255))
     screen.blit(over_text, (200, 250))
 
 
@@ -80,7 +80,7 @@ def virus(x, y):
 
 def fire_bullet(x, y):
     global bullet_state
-    bullet_state = "fire"
+    bullet_state = 'fire'
     screen.blit(bulletImg, (x + 50, y + 10))
 
 
@@ -111,8 +111,8 @@ while running:
             if event.key == pygame.K_RIGHT:
                 playerX_change = 4
             if event.key == pygame.K_SPACE:
-                if bullet_state == "ready":
-                    bullet_Sound = mixer.Sound('tank shoot.wav')
+                if bullet_state == 'ready':
+                    bullet_Sound = mixer.Sound('audio/tank shoot.wav')
                     bullet_Sound.play()
 
                     # get the current x coordinate of protective-wear
@@ -147,10 +147,10 @@ while running:
 
         collision = iscollision(planeX[i], planeY[i], bulletX, bulletY)
         if collision:
-            explosion_Sound = mixer.Sound('plane explosion.mp3')
+            explosion_Sound = mixer.Sound('audio/plane explosion.mp3')
             explosion_Sound.play()
             bulletY = 480
-            bullet_state = "ready"
+            bullet_state = 'ready'
             score_value += 1
             planeX[i] = random.randint(0, 736)
             planeY[i] = random.randint(50, 150)
@@ -159,9 +159,9 @@ while running:
 
     if bulletY <= 0:
         bulletY = 480
-        bullet_state = "ready"
+        bullet_state = 'ready'
 
-    if bullet_state == "fire":
+    if bullet_state == 'fire':
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
 
@@ -169,8 +169,5 @@ while running:
     show_score(textX, textY)
 
     pygame.display.update()
-
-
-
 
 pygame.display.update()
